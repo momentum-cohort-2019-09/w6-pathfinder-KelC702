@@ -3,11 +3,6 @@ from PIL import Image
 import numpy as np
 import random as r
 
-# see below better way using function
-# im = Image.new('RGBA',(601,600), color=(0,0,0,255))
-# draw = ImageDraw.Draw(im)
-# im.save('image.png')
-
 
 class Map:
     def __init__(self, file):
@@ -19,10 +14,10 @@ class Map:
         self.colors_big_list = []
         self.little_rows_of_colors = []
         self.paths = []
-        self.images = ''
+        self.img = ''
 
-    def read_file(self, file):
-        with open(file) as text_file:
+    def read_file(self):
+        with open(self.file) as text_file:
             self.text_contents = text_file.read()
 
     def find_elevations(self):
@@ -32,7 +27,6 @@ class Map:
     def find_min_and_max(self):
         self.min_elevation = self.elevations[0][0]
         self.max_elevation = self.elevations[0][0]
-        print("hi and low")
 
         for each in self.elevations:
             for integer in each:
@@ -51,7 +45,7 @@ class Map:
                 self.little_rows_of_colors = []
 
     def create_map_image(self):
-        self.img = Image.fromarray(np.unit8(self.colors_big_list))
+        self.img = Image.fromarray(np.uint8(self.colors_big_list))
 
 
 class Path:
@@ -136,7 +130,7 @@ class Path:
 
 
 if __name__ == "__main__":
-    map = Map("elevation_large.txt")
+    map = Map("elevation_small.txt")
     map.read_file()
     map.find_elevations
     map.find_min_and_max()
@@ -148,17 +142,3 @@ if __name__ == "__main__":
     path.indentify_path_of_least_change()
     path.draw_hiking_trail()
     map.img.save("pathfinder.png")
-
-    # colors_big_list = []
-    # little_rows_of_colors = []
-
-    # for rows in elevations:
-    #     for number in rows:
-    #         color_int = round(((number - min) / (max-min)) * 255)
-    #         little_rows_of_colors.append(color_int)
-    # colors_big_list.append(little_rows_of_colors)
-    # little_rows_of_colors = []
-
-
-# if __name__ == "__main__":
-    # map = Map("elevation_small.txt")
