@@ -1,5 +1,5 @@
 import math
-from PIL import Image, ImageDraw
+from PIL import Image
 import numpy as np
 import random as r
 
@@ -76,9 +76,9 @@ class Path:
         y = self.starting_position_y
         while x < (len(self.elevations)-1):
             point = []
-            # if y == 0:
-            #     NE = abs((self.elevations[0][x+1]) - self.position)
-            # else:
+            if y == 0:
+                NE = abs((self.elevations[0][x+1]) - self.position)
+            else:
             NE = abs((self.elevations[y-1][x+1]) - self.position)
             E = abs((self.elevations[y][x+1]) - self.position)
             if y >= (len(self.elevations)-1):
