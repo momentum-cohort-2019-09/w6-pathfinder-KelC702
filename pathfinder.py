@@ -25,8 +25,8 @@ class Map:
                            for line in self.text_contents.split("\n")]
 
     def find_min_and_max(self):
-        self.min_elevation = self.elevations[0][0]
-        self.max_elevation = self.elevations[0][0]
+        self.min_elevation = self.elevations[0]
+        self.max_elevation = self.elevations[0]
 
         for each in self.elevations:
             for integer in each:
@@ -56,7 +56,7 @@ class Path:
         self.map_pixels = ''
         self.path = []
         self.map = map
-        self.cord = ()
+        self.poop = ()
         # cord is tuple of(x,y)coordinates
         self.starting_position_y = 0
         # y is the key to it all
@@ -68,7 +68,7 @@ class Path:
         self.map_pixels = self.map.img.load()
 
     def draw_path(self, point):
-        self.map_pixels[self.cord] = (255, 255, 102)
+        self.map_pixels[self.poop] = (255, 255, 102)
 
     def find_path(self):
         total_elevation_change = 0
@@ -76,6 +76,9 @@ class Path:
         y = self.starting_position_y
         while x < (len(self.elevations)-1):
             point = []
+            # if y == 0:
+            #     NE = abs((self.elevations[0][x+1]) - self.position)
+            # else:
             NE = abs((self.elevations[y-1][x+1]) - self.position)
             E = abs((self.elevations[y][x+1]) - self.position)
             if y >= (len(self.elevations)-1):
@@ -90,27 +93,27 @@ class Path:
                 else:
                     y -= 1
                     x += 1
-                self.cord = (x, y)
-                point.append(self.cord)
+                self.poop = (x, y)
+                point.append(self.poop)
                 self.draw_path(point)
                 self.position = self.elevations[x][y]
                 total_elevation_change += smallest_delta
             elif smallest_delta == E:
                 x += 1
-                self.cord = (x, y)
-                point.append(self.cord)
+                self.poop = (x, y)
+                point.append(self.poop)
                 self.draw_path(point)
                 self.position = self.elevations[x][y]
                 total_elevation_change += smallest_delta
             else:
                 y += 1
                 x += 1
-                self.cord = (x, y)
-                point.append(self.cord)
+                self.poop = (x, y)
+                point.append(self.poop)
                 self.draw_path(point)
                 self.position = self.elevations[x][y]
                 total_elevation_change += smallest_delta
-            self.path.append(self.cord)
+            self.path.append(self.poop)
         self.list_path_elevation_changes.append(total_elevation_change)
 
     def get_all_paths(self):
@@ -130,11 +133,11 @@ class Path:
 
 
 if __name__ == "__main__":
-    map = Map("elevation_small.txt")
+    map = Map("elevation_large.txt")
     map.read_file()
-    map.find_elevations
+    map.find_elevations()
     map.find_min_and_max()
-    map.get_colors_from_elevations
+    map.get_colors_from_elevations()
     map.create_map_image()
     path = Path(map.elevations, map)
     path.determine_map_pixels()
